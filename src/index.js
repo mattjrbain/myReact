@@ -3,35 +3,48 @@ import ReactDOM from 'react-dom';
 import './index.css';
 // import App from './App';
 import * as serviceWorker from './serviceWorker';
-import Client from "./Client";
-import ClientForm from "./ClientForm";
+import Categorie from "./Categorie";
+import CategorieForm from "./CategorieForm";
 
 class App extends React.Component {
 
 
 
     state = {
-        clients: [
-            {id: 1, nom: "Lior"},
-            {id: 2, nom: "Biduke"},
-            {id: 3, nom: "Machin"},
-        ]
+        categories: [],
+        count: 0
     };
 
     handleDelete = (id) => {
-        const clients = this.state.clients.slice();
-        const index = clients.findIndex(client => client.id === id);
+        const categories = this.state.categories.slice();
+        const index = categories.findIndex(categorie => categorie.id === id);
 
 
-        clients.splice(index, 1);
-        this.setState({clients: clients});
+        categories.splice(index, 1);
+        this.setState({categories: categories});
     };
 
-    handleAdd = client => {
-        const clients = this.state.clients.slice();
-        clients.push(client);
+    handleAdd = categorie => {
+        let count = this.state.count;
+        count += 1;
+        categorie.id = count;
 
-        this.setState({clients: clients});
+        const categories = this.state.categories.slice();
+
+        let dejala = categories.filter(function (cat) {
+           return cat.libelle === categorie.libelle;
+        });
+
+        if (dejala.length === 0){
+            console.log(categories);
+            categories.push(categorie);
+
+            this.setState({count: count});
+
+            this.setState({categories: categories});
+        }else {
+            console.log("Existe déjà.");
+        }
     };
 
 
@@ -43,11 +56,11 @@ class App extends React.Component {
             <div>
                 <h1>{title}</h1>
                 <ul>
-                    {this.state.clients.map(client => (
-                        <Client details={client} onDelete={this.handleDelete}/>
+                    {this.state.categories.map(categorie => (
+                        <Categorie details={categorie} onDelete={this.handleDelete}/>
                     ))}
                 </ul>
-                <ClientForm onClientAdd={this.handleAdd}/>
+                <CategorieForm onCategorieAdd={this.handleAdd}/>
             </div>
         )
     }
