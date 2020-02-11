@@ -13,7 +13,6 @@ function Categorie(props) {
                     <li key={details.id}>
                             {details.id} -> {details.libelle}
                             <button onClick={() => onDelete(details.id)}>X</button>
-                            )
                     </li>
 
         );

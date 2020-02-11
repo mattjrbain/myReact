@@ -5,15 +5,31 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import Categorie from "./Categorie";
 import CategorieForm from "./CategorieForm";
+// import {Http2ServerResponse as res} from "node/http2";
 
 class App extends React.Component {
-
-
 
     state = {
         categories: [],
         count: 0
     };
+
+    componentDidMount() {
+        let myInit = {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'default'
+        };
+
+
+        fetch("http://localhost:5000/categories", myInit)
+            .then(res => res.json())
+            .then((resj) => {
+                console.log(resj);
+                this.setState({ categories: resj.data})
+            })
+            .catch(console.log)
+    }
 
     handleDelete = (id) => {
         const categories = this.state.categories.slice();
@@ -25,26 +41,45 @@ class App extends React.Component {
     };
 
     handleAdd = categorie => {
-        let count = this.state.count;
-        count += 1;
-        categorie.id = count;
 
-        const categories = this.state.categories.slice();
+        // let count = this.state.count;
+        // count += 1;
+        // categorie.id = count;
 
-        let dejala = categories.filter(function (cat) {
-           return cat.libelle === categorie.libelle;
-        });
+        // const categories = this.state.categories.slice();
+        //
+        // let dejala = categories.filter(function (cat) {
+        //    return cat.libelle === categorie.libelle;
+        // });
+        //
+        // if (dejala.length === 0){
+        //     console.log(categories);
+        //     categories.push(categorie);
+        //
+        //     this.setState({count: count});
+        //
+        //     this.setState({categories: categories});
+        // }else {
+        //     console.log("Existe déjà.");
+        // }
 
-        if (dejala.length === 0){
-            console.log(categories);
-            categories.push(categorie);
 
-            this.setState({count: count});
+        let json = JSON.stringify(categorie);
 
-            this.setState({categories: categories});
-        }else {
-            console.log("Existe déjà.");
-        }
+        let myInit = {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'default',
+            body: json
+        };
+        fetch("http://localhost:5000/categorie", myInit)
+            .then(res => res.json())
+            .then((resj) => {
+                console.log(resj);
+                this.setState({count: resj.data.length});
+                // this.setState({categories: resj.data})
+            })
+            .catch(console.log)
     };
 
 
@@ -57,7 +92,7 @@ class App extends React.Component {
                 <h1>{title}</h1>
                 <ul>
                     {this.state.categories.map(categorie => (
-                        <Categorie details={categorie} onDelete={this.handleDelete}/>
+                        <Categorie /*key={categorie}*/ details={categorie} onDelete={this.handleDelete}/>
                     ))}
                 </ul>
                 <CategorieForm onCategorieAdd={this.handleAdd}/>
