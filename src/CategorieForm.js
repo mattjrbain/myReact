@@ -12,10 +12,10 @@ class CategorieForm extends Component{
 
     handleSubmit = (event) => {
         event.preventDefault();
-        const id = -1;
+        // const id = -1;
         const libelle = this.state.newLibelle;
 
-        this.props.onCategorieAdd({id, libelle});
+        this.props.onCategorieAdd({libelle});
 
         this.setState({newLibelle: ""})
     };

@@ -40,46 +40,78 @@ class App extends React.Component {
         this.setState({categories: categories});
     };
 
+    //Former struggle
+    // handleAdd = categorie => {
+    //
+    //     // let count = this.state.count;
+    //     // count += 1;
+    //     // categorie.id = count;
+    //
+    //     // const categories = this.state.categories.slice();
+    //     //
+    //     // let dejala = categories.filter(function (cat) {
+    //     //    return cat.libelle === categorie.libelle;
+    //     // });
+    //     //
+    //     // if (dejala.length === 0){
+    //     //     console.log(categories);
+    //     //     categories.push(categorie);
+    //     //
+    //     //     this.setState({count: count});
+    //     //
+    //     //     this.setState({categories: categories});
+    //     // }else {
+    //     //     console.log("Existe déjà.");
+    //     // }
+    //
+    //
+    //     let json = JSON.stringify(categorie);
+    //
+    //     let myInit = {
+    //         method: 'POST',
+    //         mode: 'cors',
+    //         cache: 'default',
+    //         body: json
+    //     };
+    //     fetch("http://localhost:5000/categorie", myInit)
+    //         .then(res => res.json())
+    //         .then((resj) => {
+    //             console.log(resj);
+    //             this.setState({count: resj.data.length});
+    //             // this.setState({categories: resj.data})
+    //         })
+    //         .catch(console.log)
+    // };
+
     handleAdd = categorie => {
-
-        // let count = this.state.count;
-        // count += 1;
-        // categorie.id = count;
-
-        // const categories = this.state.categories.slice();
-        //
-        // let dejala = categories.filter(function (cat) {
-        //    return cat.libelle === categorie.libelle;
-        // });
-        //
-        // if (dejala.length === 0){
-        //     console.log(categories);
-        //     categories.push(categorie);
-        //
-        //     this.setState({count: count});
-        //
-        //     this.setState({categories: categories});
-        // }else {
-        //     console.log("Existe déjà.");
-        // }
-
-
-        let json = JSON.stringify(categorie);
-
-        let myInit = {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'default',
-            body: json
-        };
-        fetch("http://localhost:5000/categorie", myInit)
+        const categories = [...this.state.categories];
+        const index = categories.findIndex(
+            categories => categories.libelle === categorie.libelle
+        );
+        fetch("http://localhost:5000/categorie", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                                     categorie
+                                 })
+        })
             .then(res => res.json())
-            .then((resj) => {
-                console.log(resj);
-                this.setState({count: resj.data.length});
-                // this.setState({categories: resj.data})
+            .then(resj => {
+                if (index === -1) {
+                    categorie.id = resj.data.insertId;
+                    categories.push(categorie);
+                    this.setState(state => {
+                        return { categories };
+                    });
+                } else {
+                    alert("Déja crée");
+                }
             })
-            .catch(console.log)
+            .then(data => console.log(data))
+            .catch(err => console.log(err));
     };
 
 
