@@ -10,7 +10,7 @@ function Categorie(props) {
 
         return (
 
-                    <li key={details.id}>
+                    <li>
                             {details.id} -> {details.libelle}
                             <button onClick={() => onDelete(details.id)}>X</button>
                     </li>

@@ -31,59 +31,46 @@ class App extends React.Component {
             .catch(console.log)
     }
 
+    // handleDelete = (id) => {
+    //     const categories = this.state.categories.slice();
+    //     const index = categories.findIndex(categorie => categorie.id === id);
+    //
+    //
+    //     categories.splice(index, 1);
+    //     this.setState({categories: categories});
+    // };
+
     handleDelete = (id) => {
         const categories = this.state.categories.slice();
         const index = categories.findIndex(categorie => categorie.id === id);
+
+        fetch("http://localhost:5000/categorie/"+id, {
+            method: "DELETE",
+            headers: {
+                Accept: "*/*"
+            },
+
+        })
+            .then(res => res.json())
+            .then(resj => {
+                if (index !== -1) {
+                    categories.splice(index, 1);
+                    this.setState({categories: categories});
+
+                } else {
+                    alert("Déja crée");
+                }
+            })
+            .then(data => console.log(data))
+            .catch(err => console.log(err));
 
 
         categories.splice(index, 1);
         this.setState({categories: categories});
     };
 
-    //Former struggle
-    // handleAdd = categorie => {
-    //
-    //     // let count = this.state.count;
-    //     // count += 1;
-    //     // categorie.id = count;
-    //
-    //     // const categories = this.state.categories.slice();
-    //     //
-    //     // let dejala = categories.filter(function (cat) {
-    //     //    return cat.libelle === categorie.libelle;
-    //     // });
-    //     //
-    //     // if (dejala.length === 0){
-    //     //     console.log(categories);
-    //     //     categories.push(categorie);
-    //     //
-    //     //     this.setState({count: count});
-    //     //
-    //     //     this.setState({categories: categories});
-    //     // }else {
-    //     //     console.log("Existe déjà.");
-    //     // }
-    //
-    //
-    //     let json = JSON.stringify(categorie);
-    //
-    //     let myInit = {
-    //         method: 'POST',
-    //         mode: 'cors',
-    //         cache: 'default',
-    //         body: json
-    //     };
-    //     fetch("http://localhost:5000/categorie", myInit)
-    //         .then(res => res.json())
-    //         .then((resj) => {
-    //             console.log(resj);
-    //             this.setState({count: resj.data.length});
-    //             // this.setState({categories: resj.data})
-    //         })
-    //         .catch(console.log)
-    // };
 
-    handleAdd = categorie => {
+    handleAdd = (categorie) => {
         const categories = [...this.state.categories];
         const index = categories.findIndex(
             categories => categories.libelle === categorie.libelle
@@ -124,7 +111,7 @@ class App extends React.Component {
                 <h1>{title}</h1>
                 <ul>
                     {this.state.categories.map(categorie => (
-                        <Categorie /*key={categorie}*/ details={categorie} onDelete={this.handleDelete}/>
+                        <Categorie key={categorie.id} details={categorie} onDelete={this.handleDelete}/>
                     ))}
                 </ul>
                 <CategorieForm onCategorieAdd={this.handleAdd}/>
