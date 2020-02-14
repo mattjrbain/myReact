@@ -44,11 +44,12 @@ class App extends React.Component {
         const categories = this.state.categories.slice();
         const index = categories.findIndex(categorie => categorie.id === id);
 
-        fetch("http://localhost:5000/categorie/"+id, {
+        fetch("http://localhost:5000/categorie/", {
             method: "DELETE",
             headers: {
                 Accept: "*/*"
             },
+            body: JSON.stringify(id)
 
         })
             .then(res => res.json())
