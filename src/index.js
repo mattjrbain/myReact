@@ -5,6 +5,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import Categorie from "./Categorie";
 import CategorieForm from "./CategorieForm";
+
 // import {Http2ServerResponse as res} from "node/http2";
 
 class App extends React.Component {
@@ -26,34 +27,24 @@ class App extends React.Component {
             .then(res => res.json())
             .then((resj) => {
                 console.log(resj);
-                this.setState({ categories: resj.data})
+                this.setState({categories: resj.data})
             })
             .catch(console.log)
     }
-
-    // handleDelete = (id) => {
-    //     const categories = this.state.categories.slice();
-    //     const index = categories.findIndex(categorie => categorie.id === id);
-    //
-    //
-    //     categories.splice(index, 1);
-    //     this.setState({categories: categories});
-    // };
 
     handleDelete = (id) => {
         const categories = this.state.categories.slice();
         const index = categories.findIndex(categorie => categorie.id === id);
 
-        fetch("http://localhost:5000/categorie/", {
+        fetch("http://localhost:5000/categorie/" + id, {
             method: "DELETE",
             headers: {
                 Accept: "*/*"
-            },
-            body: JSON.stringify(id)
+            }
 
         })
             .then(res => res.json())
-            .then(resj => {
+            .then(() => {
                 if (index !== -1) {
                     categories.splice(index, 1);
                     this.setState({categories: categories});
@@ -65,9 +56,6 @@ class App extends React.Component {
             .then(data => console.log(data))
             .catch(err => console.log(err));
 
-
-        categories.splice(index, 1);
-        this.setState({categories: categories});
     };
 
 
@@ -83,8 +71,8 @@ class App extends React.Component {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                                     categorie
-                                 })
+                categorie
+            })
         })
             .then(res => res.json())
             .then(resj => {
@@ -92,7 +80,7 @@ class App extends React.Component {
                     categorie.id = resj.data.insertId;
                     categories.push(categorie);
                     this.setState(state => {
-                        return { categories };
+                        return {categories};
                     });
                 } else {
                     alert("Déja crée");
@@ -102,20 +90,59 @@ class App extends React.Component {
             .catch(err => console.log(err));
     };
 
+    handleUpdate = (id, libelle) => {
+        const categories = this.state.categories.slice();
+        const index = categories.findIndex(categorie => categorie.id === id);
+
+        fetch("http://localhost:5000/categorie/" + id, {
+            method: "PUT",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({libelle})
+
+        })
+            .then(res => res.json())
+            .then(() => {
+                if (index !== -1) {
+                    // categories.splice(index, 1);
+                    this.setState({categories: categories});
+
+                } else {
+                    alert("Déja crée");
+                }
+            })
+            .then(data => console.log(data))
+            .catch(err => console.log(err));
+
+    };
+
 
     render() {
         const title = "Le titre";
 
 
         return (
-            <div>
-                <h1>{title}</h1>
-                <ul>
-                    {this.state.categories.map(categorie => (
-                        <Categorie key={categorie.id} details={categorie} onDelete={this.handleDelete}/>
-                    ))}
-                </ul>
-                <CategorieForm onCategorieAdd={this.handleAdd}/>
+            <div className="row justify-content-center">
+
+                <div className="col-10 justify-content-center">
+                    <h1>{title}</h1>
+
+                    <div className="card shadow">
+                        <div className="card-body justify-content-center">
+                            {this.state.categories.map(categorie => (
+
+                                <Categorie key={categorie.id} details={categorie} onDelete={this.handleDelete}
+                                           handleUpdate={this.handleUpdate}/>
+
+                            ))}
+                            <CategorieForm onCategorieAdd={this.handleAdd}/>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
         )
     }

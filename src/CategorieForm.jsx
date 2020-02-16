@@ -1,13 +1,13 @@
 import React, {Component} from "react";
 
-class CategorieForm extends Component{
+class CategorieForm extends Component {
     state = {
         newLibelle: ''
     };
 
     handleChange = (event) => {
         const value = event.currentTarget.value;
-        this.setState({ newLibelle: value});
+        this.setState({newLibelle: value});
     };
 
     handleSubmit = (event) => {
@@ -23,8 +23,11 @@ class CategorieForm extends Component{
 
     render() {
         return <form onSubmit={this.handleSubmit}>
-            <input value={this.state.newLibelle} onChange={this.handleChange} type="text" placeholder="Ajouter une categorie"/>
-            <button>Confirmer</button>
+            <div className="form-group">
+                <input className="input-group" value={this.state.newLibelle} onChange={this.handleChange} type="text"
+                       placeholder="Ajouter une categorie"/>
+                <button className="btn btn-primary mt-2">Confirmer</button>
+            </div>
         </form>;
     }
 }
