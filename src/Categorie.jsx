@@ -14,7 +14,7 @@ class Categorie extends Component {
     render() {
         const {details, onDelete, handleUpdate} = this.props;
         return (
-                <form className="form-inline justify-content-center" onSubmit={() => handleUpdate(details.id, this.state.libelle)}>
+                <p className="form-inline justify-content-center" >
                     <div className="form-row">
                         <span className="mb-2">{details.id} -></span>
                         <div className="input-group mb-2 mr-2">
@@ -23,9 +23,9 @@ class Categorie extends Component {
                         </div>
                         <button className="btn btn-danger mb-2 mr-2" onClick={() => onDelete(details.id)}>Supprimer
                         </button>
-                        <button type="submit" className="btn btn-info mb-2">Modifier</button>
+                        <button type="submit" className="btn btn-info mb-2" onClick={() => handleUpdate(details.id, this.state.libelle)}>Modifier</button>
                     </div>
-                </form>
+                </p>
         );
     }
 
