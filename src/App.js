@@ -126,7 +126,7 @@ class App extends React.Component {
 
             <div className="row justify-content-center">
 
-              <div className="col-10 justify-content-center">
+              <div className="col-6 justify-content-center">
                 <h1>{title}</h1>
 
                 <div className="card shadow">

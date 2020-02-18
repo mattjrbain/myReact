@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 // import App from './App';
 import * as serviceWorker from './serviceWorker';
-import Accueil from "./Accueil";
+import Accueil from "./Components/Accueil";
 
 
 const rootElement = document.getElementById("root");

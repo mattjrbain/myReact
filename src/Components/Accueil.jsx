@@ -7,8 +7,8 @@ import {
     useRouteMatch,
     useParams
 } from "react-router-dom";
-import App from "./App";
-import Search from "./Search";
+import App from "../App";
+import Search from "../Search";
 
 class Accueil extends Component {
     render() {
