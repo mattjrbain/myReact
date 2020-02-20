@@ -59,6 +59,7 @@ class App extends React.Component {
 
   handleAdd = (categorie) => {
     const categories = [...this.state.categories];
+    const libelle = categorie.libelle;
     const index = categories.findIndex(
         categories => categories.libelle === categorie.libelle
     );
@@ -69,7 +70,7 @@ class App extends React.Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-                             categorie
+                             libelle
                            })
     })
         .then(res => res.json())

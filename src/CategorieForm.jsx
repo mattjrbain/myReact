@@ -24,7 +24,7 @@ class CategorieForm extends Component {
     render() {
         return <form onSubmit={this.handleSubmit}>
             <div className="form-group">
-                <input className="input-group" value={this.state.newLibelle} onChange={this.handleChange} type="text"
+                <input className="input-group" name="libelle" id="libelle" value={this.state.newLibelle} onChange={this.handleChange} type="text"
                        placeholder="Ajouter une categorie"/>
                 <button className="btn btn-primary mt-2">Confirmer</button>
             </div>

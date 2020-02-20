@@ -19,7 +19,7 @@ class Categorie extends Component {
                         <span className="badge badge-primary pt-2 mb-2 mr-2">ID : {details.id}</span>
                         <div className="input-group mb-2 mr-2">
                             <input className="form-control" value={this.state.libelle}
-                                   onChange={this.onChangeLibelle} type="text"/>
+                                   onChange={this.onChangeLibelle} name="libelle" type="text"/>
                         </div>
                         <button className="btn btn-danger mb-2 mr-2" onClick={() => onDelete(details.id)}>Supprimer
                         </button>
