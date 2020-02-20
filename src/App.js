@@ -34,7 +34,7 @@ class App extends React.Component {
     const categories = this.state.categories.slice();
     const index = categories.findIndex(categorie => categorie.id === id);
 
-    fetch("http://localhost:5000/categorie/" + id, {
+    fetch("http://localhost:5000/categories/" + id, {
       method: "DELETE",
       headers: {
         Accept: "*/*"
@@ -62,7 +62,7 @@ class App extends React.Component {
     const index = categories.findIndex(
         categories => categories.libelle === categorie.libelle
     );
-    fetch("http://localhost:5000/categorie", {
+    fetch("http://localhost:5000/categories", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -92,7 +92,7 @@ class App extends React.Component {
     const categories = this.state.categories.slice();
     const index = categories.findIndex(categorie => categorie.id === id);
 
-    fetch("http://localhost:5000/categorie/" + id, {
+    fetch("http://localhost:5000/categories/" + id, {
       method: "PUT",
       headers: {
         Accept: "application/json",

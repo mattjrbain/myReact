@@ -41,7 +41,7 @@ class Search extends Component {
         console.log(selectedOption.value);
 
         const id = selectedOption.value;
-        fetch("http://localhost:5000/categorie/"+id+"/produits", {
+        fetch("http://localhost:5000/categories/"+id+"/produits", {
             method: "GET",
             headers: {
                 Accept: "application/json",
